@@ -1,0 +1,120 @@
+﻿@model PagedList.IPagedList<WebOS.Models.Clientes>
+@*@model PagedList.IPagedList<WebOS.Models.Tecnico_Motorista>*@
+@using PagedList.Mvc;
+
+
+
+<h2>Cadastro Clientes</h2>
+
+<p>
+    <a asp-action="Create"> <input type="submit" class="btn btn-default" value="Novo Cadastro" /></a>
+</p>
+
+
+<div class="col col-lg-8">
+
+    @using (Html.BeginForm())
+    {
+        <p>
+            Digite sua busca @Html.TextBox("SearchString", ViewBag.CurrentFilter as string, new { @style="width:300px;"} )
+            <input type="submit" class="btn btn-danger" value="Buscar" />
+        </p>
+    }
+</div>
+
+
+<div class="col col-lg-4">
+
+    @*Pagina @(Model.PageNumber) de @Model.PageCount*@
+
+    @{var Page = Model.PageNumber;}
+
+    @if (Page > 1)
+    {<a href="?page=@(Model.PageNumber-1) "><img src="~/images/voltar.png" /></a>}
+    else
+    {
+        <img src="~/images/voltar.png" />
+    }
+
+    @if (Page < Model.PageCount)
+    {<a href="?page=@(Model.PageNumber+1) "><img src="~/images/avancar.png" /></a>}
+    else
+    {
+        <img src="~/images/avancar.png" />
+    }
+
+</div>
+
+
+<table class="table table-striped table-hover ">
+    <thead>
+        <tr class="danger">
+            <th>
+                @*@Html.ActionLink("Razão Social", "Index", new { sortOrder = ViewBag.NameSortParm, currentFilter = ViewBag.CurrentFilter })*@
+                Nome
+            </th>
+            <th>
+                Telefone
+                @* @Html.ActionLink("Telefone", "Index", new { sortOrder = ViewBag.DateSortParm, currentFilter = ViewBag.CurrentFilter })*@
+            </th>
+            <th>
+                Email
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td width="400">
+                    @Html.DisplayFor(modelItem => item.NomeRazaoSocial)
+
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefone_fixo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+
+                </td>
+
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Codigo">
+
+
+
+                        <small><i class="glyphicon glyphicon-edit"></i></small>
+
+
+
+                    </a>
+                    @*<a asp-action="Details" asp-route-id="@item.Codigo">Details</a> |*@
+
+                    <a asp-action="Delete" asp-route-id="@item.Codigo">
+
+
+
+
+                        <small><i class="glyphicon gly  glyphicon-trash"></i></small>
+
+
+
+
+                    </a>
+
+
+
+
+                </td>
+            </tr>
+
+        }
+    </tbody>
+</table>
+
+
+
+
+
